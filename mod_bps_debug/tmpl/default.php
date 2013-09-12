@@ -1,7 +1,7 @@
 <?php
 /**
  *	com_bix_printshop - Online-PrintStore for Joomla
- *  Copyright (C) 2010-2012 Matthijs Alles
+ *  Copyright (C) 2010-2013 Matthijs Alles
  *	Bixie.nl
  *
  */
