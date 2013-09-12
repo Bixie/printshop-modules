@@ -15,8 +15,8 @@
 	color:#404040;
 }
 .modfooter {
-	padding: 18px 15px 10px 15px;
-	color: #404040;
+	padding:10px 15px;
+	color:#404040;
 	background: #e4e4e4; /* fallback */
 	background: -webkit-gradient(linear,  top,  bottom, from(#f2f2f2), to(#dcdcdc));
 	background: -webkit-linear-gradient(top, #f2f2f2, #dcdcdc);
@@ -24,8 +24,4 @@
 	background: -ms-linear-gradient(top, #f2f2f2, #dcdcdc); 
 	background: -o-linear-gradient(top, #f2f2f2, #dcdcdc);
 	background: linear-gradient(top, #f2f2f2, #dcdcdc); 
-}
-
-div#block-main.bg-white div.block-main div#main.grid-block div#maininner.grid-box section#innertop.grid-block div.grid-box div.module div.grid-block a.button {
-	margin-top: -4px;
 }

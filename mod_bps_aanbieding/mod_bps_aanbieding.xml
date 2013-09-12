@@ -22,6 +22,16 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic" addfieldpath="/administrator/components/com_bixprintshop/models/fields">
+				<field
+					name="titel"
+					type="text"
+					label="Titel"
+					description="Productnaam Aanbieding" />
+				<field
+					name="aantal"
+					type="text"
+					label="Aantal"
+					description="Aantal stuks" />
 				<field name="tekst" type="textarea" filter="safehtml"
 					cols="30" rows="5"
 					label="MOD_BPS_AANBIEDING_TEKST"

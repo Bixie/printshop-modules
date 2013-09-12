@@ -15,6 +15,8 @@ require_once JPATH_ADMINISTRATOR.DS.'components'.DS.'com_bixprintshop'.DS.'class
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
 JFactory::getDocument()->addStyleSheet('modules/mod_bps_aanbieding/assets/bps_aanbieding.css');
+$titel = $params->get('titel');
+$aantal = number_format($params->get('aantal'),0,'','.');
 $tekst = nl2br($params->get('tekst', ''));
 $prijs = $params->get('prijs', '');
 $image = $params->get('image', '');
