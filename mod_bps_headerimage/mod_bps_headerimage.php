@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 require_once JPATH_ADMINISTRATOR.DS.'components'.DS.'com_bixprintshop'.DS.'classes'.DS.'bixtools.php';
-JFactory::getDocument()->addStylesheet(str_replace(JPATH_ROOT,'',dirname(__FILE__)).'/assets/headerimage.css')
+JFactory::getDocument()->addStylesheet(str_replace(JPATH_ROOT,'',dirname(__FILE__)).'/assets/headerimage.css');
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
 //init vars
