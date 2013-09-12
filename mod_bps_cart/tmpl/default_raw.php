@@ -1,7 +1,7 @@
 <?php
 /**
  *	com_bix_printshop - Online-PrintStore for Joomla
- *  Copyright (C) 2010-2012 Matthijs Alles
+ *  Copyright (C) 2010-2013 Matthijs Alles
  *	Bixie.nl
  *
  */
@@ -19,4 +19,4 @@ if ($bixCart->get('nrOrders',0) == 1 ) : echo JText::sprintf('MOD_BPS_CART_ONE_I
 endif;	 
 ?>
 </span>
-<?php echo BixHtml::formatPrice($bixCart->get('totaalNetto',0)); ?>
+<?php echo BixHtml::formatPrice($bixCart->get('totaalNetto',0));
