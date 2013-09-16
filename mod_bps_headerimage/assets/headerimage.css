@@ -1,9 +1,10 @@
 
 #headerimage {
 	background-position:contain;
+	margin:auto;
 }
 
-#headerimage div{
+#headerimage div.tekst {
 	position: absolute; 
 	padding: 10px; 
 	font-size: 16px; 
