@@ -16,23 +16,30 @@
 		<filename>mod_bps_cart.xml</filename>
 	</files>
 	<languages>
-		<language tag="nl-NL">nl-NL.mod_bps_cart.ini</language>
-		<language tag="nl-NL">nl-NL.mod_bps_cart.sys.ini</language>
+		<language tag="nl-NL">language/nl-NL/nl-NL.mod_bps_cart.ini</language>
+		<language tag="nl-NL">language/nl-NL/nl-NL.mod_bps_cart.sys.ini</language>
 	</languages>
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
 				<field name="linkEl" type="radio"
 					default="1"
-					label="Link naar winkelwagen"
+					label="MOD_BPS_CART_LINK"
+					description="">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="showPrices" type="radio"
+					default="1"
+					label="MOD_BPS_CART_PRIJSBESTEL"
 					description="">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
 				<field name="floatMod" type="text" default="0"
-					label="Meescrollend vanaf" description="" />
+					label="MOD_BPS_CART_SCROLL" description="" />
 				<field name="floatHeightAdj" type="text" default="0"
-					label="Correctie hoogte" description="" />
+					label="MOD_BPS_CART_OFFSET" description="" />
 			</fieldset>
 
 			<fieldset name="advanced">
