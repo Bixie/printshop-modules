@@ -14,9 +14,9 @@ JFactory::getDocument()->addStylesheet(str_replace(JPATH_ROOT,'',dirname(__FILE_
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
 //init vars
-$sTekstregel1 = '';
-$sTekstregel2 = '';
-$sImagepath = '';
+$sTekstregel1 = false;
+$sTekstregel2 = false;
+$sImagepath = false;
 $iWidth    = 0;
 $iHeight   = 0;
 //joomla request uitlezen
@@ -27,19 +27,22 @@ if ($option == 'com_bixprintshop' && $view == 'productdetails') {
 	$iProductID = JRequest::getInt('productID',0);
 	if ($iProductID) {
 		$bixProduct = BixTools::getproductClass($iProductID);
-		$sTekstregel1 = $bixProduct->get('tekstregel1','','params',true);
-		$sTekstregel2 = $bixProduct->get('tekstregel2','','params',true);
+		$sTekstregel1 = $bixProduct->get('tekstregel1','-','params',true);
+		$sTekstregel2 = $bixProduct->get('tekstregel2','-','params',true);
 		$sImagepath = $bixProduct->get('image','','params',true);
 	}
 }
 //contentcategorie?
 
-
-
-if ($sImagepath == '' ) { //dan uit module
-	$sTekstregel1 = $params->get('tekstregel1','');
-	$sTekstregel2 = $params->get('tekstregel2','');
+//dan uit module
+if ($sImagepath == false ) { 
 	$sImagepath = $params->get('image', '');
+}
+if (!$sTekstregel1 || $sTekstregel1 == '-' ) { 
+	$sTekstregel1 = $params->get('tekstregel1','');
+}
+if (!$sTekstregel2 || $sTekstregel2 == '-' ) { 
+	$sTekstregel2 = $params->get('tekstregel2','');
 }
 if (file_exists(JPATH_ROOT.DS.$sImagepath)) {
 	$aImageSize = getimagesize(JPATH_ROOT.DS.$sImagepath);
