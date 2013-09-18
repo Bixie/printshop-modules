@@ -35,7 +35,7 @@ if ($option == 'com_bixprintshop' && $view == 'productdetails') {
 //contentcategorie?
 
 //dan uit module
-if ($sImagepath == false ) { 
+if ($sImagepath == false || !file_exists(JPATH_ROOT.DS.$sImagepath)) { 
 	$sImagepath = $params->get('image', '');
 }
 if (!$sTekstregel1 || $sTekstregel1 == '-' ) { 
