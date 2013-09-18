@@ -9,7 +9,13 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
-<div id="headerimage" style="background-image: url('<?php echo $image; ?>');">
-<div style="position: absolute; top: 60px; right: 500px; background: #3498db; padding: 10px; color: #fff; font-size: 16px; font-weight: 700;">Kwaliteitsdrukwerk</div>
-<div style="position: absolute; top: 110px; right: 600px; background: #f29400; padding: 10px; color: #fff; font-size: 16px; font-weight: 700;">Dát is Drukhetnu.nl</div>
+<div id="headerimage" class="widthmax" style="background-image: url('<?php echo $sImagepath; ?>');max-width:<?php echo $iWidth; ?>px;max-height:<?php echo $iHeight; ?>px;">
+	<div class="header-wrapper">
+		<?php if ($sTekstregel1 != '') : ?>
+			<div class="tekstregels tekstregel1"><?php echo $sTekstregel1; ?></div>
+		<?php endif; ?>
+		<?php if ($sTekstregel2 != '') : ?>
+			<div class="tekstregels tekstregel2"><?php echo $sTekstregel2; ?></div>
+		<?php endif; ?>
+	</div>
 </div>
