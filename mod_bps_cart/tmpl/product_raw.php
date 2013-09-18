@@ -8,6 +8,12 @@
 
 // no direct access
 defined('_JEXEC') or die;
+if (!isset($params)) {
+	jimport( 'joomla.application.module.helper' ); 
+    $module = JModuleHelper::getModule('mod_bps_cart');
+    $params = new JRegistry();
+    $params->loadString($module->params);
+}
 ?>
 
 	<div class="cartItems">
