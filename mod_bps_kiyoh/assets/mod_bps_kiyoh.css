@@ -1,0 +1,61 @@
+.kiyoh-rating {
+	margin:5px 0;
+}
+
+.kiyohRating .rstar {
+	background-image: url(ratingstars.png);
+	display: inline-block;
+	height: 15px;
+	width: 95px;
+}
+
+.kiyohRating .rstar-1    { background-position: -80px 0; }
+.kiyohRating .rstar-15  { background-position: -80px -15px; }
+.kiyohRating .rstar-2    { background-position: -60px 0; }
+.kiyohRating .rstar-25  { background-position: -60px -15px; }
+.kiyohRating .rstar-3    { background-position: -40px 0; }
+.kiyohRating .rstar-35  { background-position: -40px -15px; }
+.kiyohRating .rstar-4    { background-position: -20px 0; }
+.kiyohRating .rstar-45  { background-position: -20px -15px; }
+.kiyohRating .rstar-5    {  }
+
+.kiyoh-ratingscore, .kiyoh-review-ratingscore {
+	color: #F47721;
+    font-family: 'slabtallx-mediumregular';
+    font-size: 16px;
+	font-weight:bold;
+	margin-left:10px;
+}
+.kiyohLink {
+	display: inline-block;
+	margin-top:5px;
+}
+.kiyohLink  img {
+	float:right;
+}
+
+.kiyoh-review {
+	padding:5px;
+	border:1px dotted #ccc;
+	margin-bottom:5px;
+	border-radius:3px;
+}
+
+.kiyoh-review-rating {
+	display:inline-block;
+	width:100%;
+}
+
+.kiyoh-description.extended {
+	cursor:pointer;
+}
+
+.kiyoh-description {
+	font-style:italic;
+}
+[itemprop=reviewer],[itemprop=dtreviewed] {
+	font-weight:bold;
+}
+.kiyoh-review-ratingscore {
+    font-size: 13px;
+}

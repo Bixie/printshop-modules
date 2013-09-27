@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5" client="site" method="upgrade">
+	<name>Bixie Printshop Kiyoh Module</name>
+	<author>Matthijs Alles and Jankris Oldekamp</author>
+	<creationDate>September 2013</creationDate>
+	<copyright>Copyright (C) 2013 Bixie. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<authorEmail>admin@bixie.nl</authorEmail>
+	<authorUrl>www.bixie.nl</authorUrl>
+	<version>1.0.0</version>
+	<description>Geeft reviews vanuit Kiyoh weer in de site in Google Rich Snippets</description>
+	<files>	
+		<filename>mod_bps_kiyoh.xml</filename>
+        <filename module="mod_bps_kiyoh">mod_bps_kiyoh.php</filename>
+        <filename>index.html</filename>
+		<folder>tmpl</folder>
+		<folder>assets</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldpath="/administrator/components/com_bixprintshop/models/fields">
+				<field name="xmlUrl" type="bixtext"	label="Url xml-bestand" description="" default="" />
+
+				<field name="logoUrl" type="bixtext"	label="Logo afbeelding" description="" default="" />
+
+				<field name="cacheTime" type="bixtext"	label="Tijd (minuten) voor cache" description="" default="480" size="10" />
+
+				<field name="best" type="bixtext"	label="Hoogste waarde" description="" default="10" size="10"/>
+
+				<field name="showReviews" type="bixradio"	default="1"	label="Toon reviews"
+					description="">
+						<option value="1">BIX_YES</option>
+						<option value="0">BIX_NO</option>
+				</field>
+
+				<field name="nrReviews"	type="bixlist"	default="1"	label="Aantal reviews"
+					description="">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="15">15</option>
+
+				</field>
+
+				<field name="reviewOnly" type="bixradio" default="1" label="Alleen met review" 
+						description="Toon alleen beoordelingen met geschreven review. Leeg cache om resultaat te zien (zet cachetijd op 0 en refresh module op de frontend)">
+						<option value="1">BIX_YES</option>
+						<option value="0">BIX_NO</option>
+				</field>
+
+				<field name="showDescription" type="bixradio" default="1" label="Toon geschreven review" 
+						description="">
+						<option value="1">BIX_YES</option>
+						<option value="0">BIX_NO</option>
+				</field>
+
+				<field name="maxLength" type="bixtext"	label="Max lengte review" description="" default="10" size="10"/>
+
+
+			</fieldset>
+			<fieldset name="advanced">
+
+				<field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+
+				<field
+					name="moduleclass_sfx"
+					type="text"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+
+				<field name="cache"	type="list"	default="1"	label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC">
+					<option	value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field
+					name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				<field
+					name="cachemode"
+					type="hidden"
+					default="static">
+					<option
+						value="static"></option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
