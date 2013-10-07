@@ -33,7 +33,27 @@ if ($option == 'com_bixprintshop' && $view == 'productdetails') {
 	}
 }
 //contentcategorie?
-
+if ($option == 'com_content' && $view == 'article') {
+	$iArticleID = JRequest::getInt('id',0);
+	if ($iArticleID) {
+		$db = JFactory::getDbo();
+		$db->setQuery("SELECT images FROM #__content WHERE id = $iArticleID");
+		$sImages = $db->loadResult();
+		if ($sImages) {
+			$rImages = new JRegistry;
+			$rImages->loadString($sImages);
+			if ($rImages->get('image_intro',false)) {
+				$sImagepath = $rImages->get('image_intro','');
+			}
+			if ($rImages->get('image_intro_alt',false)) {
+				$sTekstregel1 = $rImages->get('image_intro_alt','');
+			}
+			if ($rImages->get('image_intro_caption',false)) {
+				$sTekstregel2 = $rImages->get('image_intro_caption','');
+			}
+		}
+	}
+}
 //dan uit module
 if ($sImagepath == false || !file_exists(JPATH_ROOT.DS.$sImagepath)) { 
 	$sImagepath = $params->get('image', '');
