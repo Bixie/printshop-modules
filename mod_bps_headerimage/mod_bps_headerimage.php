@@ -46,10 +46,10 @@ if ($option == 'com_content' && $view == 'article') {
 				$sImagepath = $rImages->get('image_intro','');
 			}
 			if ($rImages->get('image_intro_alt',false)) {
-				$sTekstregel1 = $rImages->get('image_intro_alt','');
+				$sTekstregel1 = $rImages->get('image_intro_alt','-');
 			}
 			if ($rImages->get('image_intro_caption',false)) {
-				$sTekstregel2 = $rImages->get('image_intro_caption','');
+				$sTekstregel2 = $rImages->get('image_intro_caption','-');
 			}
 		}
 	}

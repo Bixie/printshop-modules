@@ -11,10 +11,10 @@ defined('_JEXEC') or die;
 ?>
 <div id="headerimage" class="widthmax" style="background-image: url('<?php echo $sImagepath; ?>');max-width:<?php echo $iWidth; ?>px;max-height:<?php echo $iHeight; ?>px;">
 	<div class="header-wrapper">
-		<?php if ($sTekstregel1 != '') : ?>
+		<?php if ($sTekstregel1 != '' && $sTekstregel1 != 'leeg') : ?>
 			<div class="tekstregels tekstregel1"><?php echo $sTekstregel1; ?></div>
 		<?php endif; ?>
-		<?php if ($sTekstregel2 != '') : ?>
+		<?php if ($sTekstregel2 != '' && $sTekstregel2 != 'leeg') : ?>
 			<div class="tekstregels tekstregel2"><?php echo $sTekstregel2; ?></div>
 		<?php endif; ?>
 	</div>
