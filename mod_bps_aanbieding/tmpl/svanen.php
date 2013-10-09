@@ -9,14 +9,13 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
-<div style="background:url('/<?php echo $image; ?>') 0px 10px no-repeat;">
-	<div class="offer-details">
-		<h3 class="module-title"><? echo $titel; ?></h3>	
-		<p><?php echo $tekst; ?></p>
-		<a href="<?php echo $item->prodLink; ?>" class="button-primary" style="float: right;">Bekijk</a>
+<div class="grid-block width100 aanbiedingtekst">
+	<div class="bg width100" style="background:url('/<?php echo $image; ?>') no-repeat scroll 100% 0 transparent;min-height:<?php echo $height; ?>px;">
+		<div class="tekst ">
+			<?php echo $tekst; ?>
+		</div>
 	</div>
-	<div class="offer-price">
-		<div class="offer-amount"><span class="offer-amount-count"><? echo $aantal; ?></span> stuks</div>
-		<div class="offer-newprice">&euro;<? echo $prijs; ?></div>
-	</div>
+</div>
+<div class="grid-block width100 modfooter">
+	<a href="<?php echo $sLink; ?>" class="button"><span class="buttontext"><?php echo JText::_('MOD_BPS_AANBIEDING_PRIJSINFO'); ?></span></a>
 </div>

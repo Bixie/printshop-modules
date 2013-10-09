@@ -44,6 +44,9 @@
 					label="MOD_BPS_AANBIEDING_PRODUCT" query="SELECT productID, productNaam FROM #__bps_product WHERE state=1 ORDER BY productNaam" key_field="productID" value_field="productNaam">
 					<option value="0">MOD_BPS_AANBIEDING_KIES_PRODUCT</option>
 				</field>
+				<field name="moduleLink" type="text" filter="safehtml" size="30"
+					label="MOD_BPS_AANBIEDING_LINK"
+					description="MOD_BPS_AANBIEDING_LINK_DESC" />
 			<field name="image" type="media" directory="aanbiedingen"
 				hide_none="1" label="MOD_BPS_AANBIEDING_IMAGE"
 				size="20"

@@ -31,6 +31,9 @@ if ($productID) {
 	} else {
 		$item->prodLink = JRoute::_('index.php?option=com_bixprintshop&view=productdetails&catid='.$item->catid.'&productID='.$item->productID);
 	}
+	$sLink = $item->prodLink;
 }
-
+if ($params->get('moduleLink', '') != '') {
+	$sLink = $params->get('moduleLink', '');
+}
 require JModuleHelper::getLayoutPath('mod_bps_aanbieding', $params->get('layout', 'default'));
