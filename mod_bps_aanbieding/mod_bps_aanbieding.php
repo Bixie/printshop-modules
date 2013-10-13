@@ -24,12 +24,14 @@ $imageinfo = getimagesize(JPATH_ROOT.DS.$image);
 $width    = $imageinfo[0];
 $height   = $imageinfo[1];
 $productID = $params->get('productID', 0);
+$prijsID = $params->get('prijsID', 0);
 if ($productID) {
 	$item = BixTools::getItem('product',$productID);
+	$prijsSfx = $prijsID?'&p='.$prijsID:'';
 	if ($item->params['itemId'] > 0) {
-		$item->prodLink = JRoute::_('index.php?Itemid='.$item->params['itemId']);
+		$item->prodLink = JRoute::_('index.php?Itemid='.$item->params['itemId'].$prijsSfx);
 	} else {
-		$item->prodLink = JRoute::_('index.php?option=com_bixprintshop&view=productdetails&catid='.$item->catid.'&productID='.$item->productID);
+		$item->prodLink = JRoute::_('index.php?option=com_bixprintshop&view=productdetails&catid='.$item->catid.'&productID='.$item->productID.$prijsSfx);
 	}
 	$sLink = $item->prodLink;
 }

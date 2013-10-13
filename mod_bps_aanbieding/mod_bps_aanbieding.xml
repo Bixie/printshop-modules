@@ -37,7 +37,11 @@
 					label="MOD_BPS_AANBIEDING_TEKST"
 					description="MOD_BPS_AANBIEDING_TEKST_DESC" />
 				<field name="prijs" type="bixeuro" dec="0" size="10"
-					class="inputbox validate-integer talign-right" label="MOD_BPS_AANBIEDING_BEDRAG"
+					class="inputbox validate-numeric talign-right" label="MOD_BPS_AANBIEDING_BEDRAG"
+					description=""
+					default="0" required="false" />
+				<field name="prijsID" type="bixtext" size="10"
+					class="inputbox validate-integer talign-right" label="MOD_BPS_AANBIEDING_PRIJSID"
 					description=""
 					default="0" required="false" />
 				<field name="productID" type="bixsql" default="" class="inputbox"
