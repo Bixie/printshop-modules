@@ -25,11 +25,13 @@ $width    = $imageinfo[0];
 $height   = $imageinfo[1];
 $productID = $params->get('productID', 0);
 $prijsID = $params->get('prijsID', 0);
+$prijsOptie = $params->get('prijsOptie', 0);
 if ($productID) {
 	$item = BixTools::getItem('product',$productID);
 	$prijsSfx = $prijsID?'&p='.$prijsID:'';
+	$optionSfx = $prijsOptie?'&o='.$prijsOptie:'';
 	if ($item->params['itemId'] > 0) {
-		$item->prodLink = JRoute::_('index.php?Itemid='.$item->params['itemId'].$prijsSfx);
+		$item->prodLink = JRoute::_('index.php?Itemid='.$item->params['itemId'].$prijsSfx.$optionSfx);
 	} else {
 		$item->prodLink = JRoute::_('index.php?option=com_bixprintshop&view=productdetails&catid='.$item->catid.'&productID='.$item->productID.$prijsSfx);
 	}

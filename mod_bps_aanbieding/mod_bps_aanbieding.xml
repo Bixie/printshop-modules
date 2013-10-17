@@ -40,14 +40,26 @@
 					class="inputbox validate-numeric talign-right" label="MOD_BPS_AANBIEDING_BEDRAG"
 					description=""
 					default="0" required="false" />
-				<field name="prijsID" type="bixtext" size="10"
-					class="inputbox validate-integer talign-right" label="MOD_BPS_AANBIEDING_PRIJSID"
-					description=""
-					default="0" required="false" />
 				<field name="productID" type="bixsql" default="" class="inputbox"
 					label="MOD_BPS_AANBIEDING_PRODUCT" query="SELECT productID, productNaam FROM #__bps_product WHERE state=1 ORDER BY productNaam" key_field="productID" value_field="productNaam">
 					<option value="0">MOD_BPS_AANBIEDING_KIES_PRODUCT</option>
 				</field>
+				<field name="prijsID" type="bixtext" size="10"
+					class="inputbox validate-integer talign-right" label="MOD_BPS_AANBIEDING_PRIJSID"
+					description="MOD_BPS_AANBIEDING_PRIJSID_DESC"
+					default="0" required="false" />
+				<field name="prijsOptie" type="bixlist"	class="inputbox" size="1"
+					label="MOD_BPS_AANBIEDING_PRIJSOPTIE"
+					description="MOD_BPS_AANBIEDING_PRIJSOPTIE_DESC"
+					default="0">
+					<option value="0">PRIJSOPTIE_GEEN</option>
+					<option value="1">PRIJSOPTIE_EERSTE</option>
+					<option value="2">PRIJSOPTIE_TWEEDE</option>
+					<option value="3">PRIJSOPTIE_DERDE</option>
+					<option value="4">PRIJSOPTIE_VIERDE</option>
+					<option value="5">PRIJSOPTIE_VIJFDE</option>
+					<option value="6">PRIJSOPTIE_ZESDE</option>
+				</field> 
 				<field name="moduleLink" type="text" filter="safehtml" size="30"
 					label="MOD_BPS_AANBIEDING_LINK"
 					description="MOD_BPS_AANBIEDING_LINK_DESC" />
