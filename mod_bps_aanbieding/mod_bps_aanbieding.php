@@ -24,7 +24,7 @@ $imageinfo = getimagesize(JPATH_ROOT.DS.$image);
 $width    = $imageinfo[0];
 $height   = $imageinfo[1];
 $productID = $params->get('productID', 0);
-$prijsID = $params->get('prijsID', 0);
+$prijsID = trim($params->get('prijsID', 0));
 $prijsOptie = $params->get('prijsOptie', 0);
 if ($productID) {
 	$item = BixTools::getItem('product',$productID);
