@@ -16,6 +16,6 @@ defined('_JEXEC') or die;
 		<span class="fb-rating" itemprop="average"><? echo $score; ?></span> / <span class="fb-scale" itemprop="best"><? echo $scoremax; ?></span><br/>
 	</span>
 	<div class="rstar rstar-<? echo number_format(modFeedbackHelper::round_to_half($score),1,'',''); ?>"></div>
-	<br/><span class="fb-count" itemprop="votes"><? echo $reviews; ?></span> reviews
+	<br/><a href="<? echo $link; ?>" target="_blank" rel="nofollow"><span class="fb-count" itemprop="votes"><? echo $reviews; ?></span> reviews</a>
 </div>
 
