@@ -9,14 +9,15 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
-<div style="background:url('/<?php echo $image; ?>') 0px 10px no-repeat;">
+<a href="<?php echo $item->prodLink; ?>" class="offer-link">
+<div class="offer-wrapper" style="background-image:url('/<?php echo $image; ?>')">
 	<div class="offer-details">
 		<h3 class="module-title"><? echo $titel; ?></h3>	
 		<p><?php echo $tekst; ?></p>
-		<a href="<?php echo $item->prodLink; ?>" class="button-primary" style="float: right;">Bekijk</a>
 	</div>
 	<div class="offer-price">
 		<div class="offer-amount"><span class="offer-amount-count"><? echo $aantal; ?></span> stuks</div>
 		<div class="offer-newprice">&euro;<? echo $prijs; ?></div>
 	</div>
 </div>
+</a>
