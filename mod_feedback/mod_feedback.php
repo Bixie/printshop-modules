@@ -21,7 +21,7 @@ if (!JFolder::exists(JPATH_ROOT.DS.'cache/feedback')) {
        JFolder::create(JPATH_ROOT.DS.'cache/feedback');
 }
 
-if(!file_exists($cacheName) || filemtime($cacheName) > time() + $cache_time) {
+if(!file_exists($cacheName) || filemtime($cacheName) + $cache_time < time()) {
   $contents = file_get_contents($url);
   file_put_contents($cacheName, $contents);
 }
