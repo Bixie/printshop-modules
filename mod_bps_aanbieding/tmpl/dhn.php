@@ -16,8 +16,8 @@ defined('_JEXEC') or die;
 		<p><?php echo $tekst; ?></p>
 	</div>
 	<div class="offer-price">
-		<div class="offer-amount"><span class="offer-amount-count"><? echo $aantal; ?></span> stuks</div>
-		<div class="offer-newprice">&euro;<? echo $prijs; ?></div>
+		<div class="offer-amount"><? if($percentage) { ?><span class="offer-amount-count">Korting!</span><? } else { ?><span class="offer-amount-count"><? echo $aantal; ?></span> stuks<? } ?></div>
+		<div class="offer-newprice"><? if($percentage) { echo $percentage; } else { echo $prijs; } ?></div>
 	</div>
 </div>
 </a>

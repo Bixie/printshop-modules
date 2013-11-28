@@ -32,6 +32,11 @@
 					type="text"
 					label="Aantal"
 					description="Aantal stuks" />
+				<field
+					name="percentage"
+					type="text"
+					label="Percentage"
+					description="Kortinspercentage" />
 				<field name="tekst" type="textarea" filter="safehtml"
 					cols="30" rows="5"
 					label="MOD_BPS_AANBIEDING_TEKST"
