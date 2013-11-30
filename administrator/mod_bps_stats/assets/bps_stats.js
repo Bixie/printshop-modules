@@ -8,9 +8,12 @@
 	options: {
 		elIds: {
 			periode: '',
+			dataType: '',
+			startDatum: '',
 			graph: ''
 		},
 		templates: {
+			graphHolder: '<div id="graphHolder"></div>',
 			graphTitle: '<h2 class="graphTitle">{content}</h2>',
 			tblStart: '<table class="bps-stats"><thead><tr>',
 			label: '<em>{content}</em>',
@@ -32,34 +35,39 @@
 		Object.each(this.options.elIds, function (id,name) {
 			self.els[name] = document.id(id);
 		});
-		this.els.periode.addEvent('change', function (e) {
-			self.loadGraphs();
+		['periode','dataType','startDatum'].each(function (elId) {
+			self.els[elId].addEvent('change', function (e) {
+				self.loadGraphs();
+			});
+			
 		});
 // console.log(this.formEl,formID);
+
 		this.loadGraphs();
 	},
 	loadGraphs: function () {
 		var self = this;
 		new Request.JSON({
 			url: self.options.reqUrl,
-			onRequest: self.els.graph.addClass('loading'),
+			onRequest: self.els.graph.fade(0.1),
 			onError: function(text,error){self.els.graph.set('html',text)},
 			onSuccess: function(result){self.setGraphs(result)} 
 		}).send(self.formEl);
-
-		
 	},
 	setGraphs: function (returndata) {
-		var self = this;
-		this.els.graph.removeClass('loading');
-		var table = this.buildTable(returndata);
+		var self = this, tmpl = this.options.templates;
+		this.els.graph.fade(1);
+		var html = tmpl.graphHolder;
 		
-		this.els.graph.set('html',table)
+		html += this.buildTable(returndata);
+		
+		this.els.graph.set('html',html);
+		this.setBrowseRange(returndata);
+		this.drawVisualization(returndata);
 	},
 	buildTable: function (returndata) {
 		var self = this, tmpl = this.options.templates;
-		var html = tmpl.graphTitle.replace('{content}',returndata.graphInfo.titel);
-		html += tmpl.tblStart;
+		var html = tmpl.tblStart;
 		//labels toevoegen
 		Object.each(returndata.fields,function(fieldInfo,fieldName) {
 			html += tmpl.tblHead.replace('{content}',fieldInfo.label);
@@ -72,6 +80,7 @@ console.log(returndata);
 			//rij maken
 			html += tmpl.tblStartRow;
 			Object.each(returndata.fields,function(fieldInfo,fieldName) {
+				if (!stats[fieldName]) stats[fieldName] = 0;
 				switch (fieldInfo.format) {
 					case 'label':
 						var formatted = tmpl.label.replace('{content}',labelInfo.formatted);
@@ -90,11 +99,72 @@ console.log(returndata);
 		});
 		html += tmpl.tblEnd;
 		return html;
+	},
+	setBrowseRange: function(returndata) {
+		var optionEls = [];
+		Object.each(returndata.browseRange,function(optionInfo) {
+			optionEls.push(new Element('option',{value:optionInfo.value,text:optionInfo.text}));
+		});
+		this.els.startDatum.empty().adopt(optionEls).set('value',returndata.params.startDatum);
+	},
+	drawVisualization: function(returndata,totalCol) {
+		var dataArray = [], tmpl = this.options.templates;
+		var skipFields = ['margePerc'];
+		
+		//labels toevoegen
+		var dataRow = [];
+		Object.each(returndata.fields,function(fieldInfo,fieldName) {
+			if (!skipFields.contains(fieldName)) {
+				dataRow.push(fieldInfo.label);
+			}
+		});
+		dataArray.push(dataRow);
+		//data uitlezen
+		var i = 0;
+		Object.each(returndata.infos,function(labelInfo,key) {
+			if (i > 0 || totalCol) {
+				var stats = returndata.stats[key];
+				//rij maken
+				var dataRow = [];
+				Object.each(returndata.fields,function(fieldInfo,fieldName) {
+					if (!skipFields.contains(fieldName)) {
+						switch (fieldInfo.format) {
+							case 'label':
+								var formatted = labelInfo.formatted;
+							break;
+							case 'euro':
+								var formatted = stats[fieldName].toFloat();
+							break;
+							case 'perc':
+								var formatted = stats[fieldName].toFloat();
+							break;
+						}
+						dataRow.push(formatted);
+					}
+				});
+				dataArray.push(dataRow);
+			}
+			i++;
+		});
+
+console.log(dataArray);
+		var data = google.visualization.arrayToDataTable(dataArray);
+		var options = {
+			title : returndata.graphInfo.titel,
+			vAxis: {title: returndata.graphInfo.titelvAxis},
+			hAxis: {title: returndata.graphInfo.titelhAxis},
+			seriesType: "bars"
+		}; 
+		if (returndata.graphInfo.lineCol) {
+			options.series = {index: {type: "line"}};
+			options.series[returndata.graphInfo.lineCol] = {type: "line"};
+		}
+		
+		var chart = new google.visualization.ComboChart(document.getElementById('graphHolder'));
+		chart.draw(data, options);
 	}
+	//google.setOnLoadCallback(drawVisualization);
 });
-
-
-
 
 
 

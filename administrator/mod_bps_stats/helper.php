@@ -10,56 +10,7 @@ jimport('joomla.application.categories');
  * @package		Joomla.Administrator
  * @subpackage	mod_latest
  */
-abstract class modbps_statsHelper
-{
-	/**
-	 * Get a list of articles.
-	 *
-	 * @params	JObject		The module parameters.
-	 *
-	 * @return	mixed		An array of articles, or false on error.
-	 */
-	public static function getList($params)	{
-		// Initialise variables
-		$user = JFactory::getuser();
-
-		$db		= JFactory::getDbo();
-		$query	= $db->getQuery(true);
-		$query->select("o.orderID AS id, o.productNaam, o.orderNetto, o.created, o.checked_out, o.checked_out_time");
-		// Join over the user
-		$query->select("CONCAT(ou.name,' (',ou.username,')') AS userNaam");
-		$query->from('#__bps_order AS o');
-		$query->join('INNER', '#__users AS ou ON ou.id=o.userID');
-		//orderstatus
-		$query->select('os.statusName AS orderStatusName');
-		$query->join('LEFT', '#__bps_orderstatus AS os ON os.statusCode = o.orderStatus');
-		// Join over the users for the checked out user.
-		$query->select('up.name AS editor');
-		$query->join('LEFT', '#__users AS up ON up.id=o.checked_out');
-	
-		$query->where('o.bestelID > 0');
-		$query->order('o.created DESC');
-		
-		$db->setQuery($query,0,$params->get('count', 5));
-		$items = $db->loadObjectList();
-
-		if ($error = $db->getError()) {
-			JError::raiseError(500, $error);
-			return false;
-		}
-
-		// Set the links
-		foreach ($items as &$item) {
-			if ($user->authorise('core.edit', 'com_bixprintshop.order.'.$item->id)){
-				$item->link = JRoute::_('index.php?option=com_bixprintshop&task=order.edit&orderID='.$item->id);
-			} else {
-				$item->link = '';
-			}
-		}
-
-		return $items;
-	}
-
+abstract class modbps_statsHelper {
 	/**
 	 * Get the alternate title for the module
 	 *
@@ -89,13 +40,30 @@ abstract class modbps_statsHelper
 	
 	public static function showstats($params) {
 		$app = JFactory::getApplication();
-		$app->getUserState('com_bixprintshop.mod_bps_stats.periode',$params['periode']);
-		$sStartDatum = '2013-11-29 12:29:59';
+		$app->setUserState('com_bixprintshop.mod_bps_stats.periode',$params['periode']);
+		$app->setUserState('com_bixprintshop.mod_bps_stats.dataType',$params['dataType']);
+		$sStartDatum = JArrayHelper::getValue($params,'startDatum',JFactory::getDate()->format('Y-m-d'));
+		$app->setUserState('com_bixprintshop.mod_bps_stats.startDatum',$sStartDatum);
 		$sRapportageDag = $params['rapportageDag'];
 		$date1 = JFactory::getDate($sStartDatum);
 		$aStats = array();
 		$aInfos = array();
 		$aGraphInfo = array();
+		switch ($params['dataType']) {
+			case 'omzet':
+				$sStatFunction = 'getBestelTotals';
+				$aGraphInfo['titelBase'] = 'MOD_BPS_STATS_GRAPHTITLE_OMZET_DATES_SPR';
+				$aGraphInfo['titelvAxis'] = JText::_('MOD_BPS_STATS_TOTALEN');
+				$aGraphInfo['titelhAxis'] = JText::_('MOD_BPS_STATS_DAGEN');
+				$aGraphInfo['lineCol'] = 1;
+			break;
+			case 'factuur':
+				$sStatFunction = 'getFactuurTotals';
+				$aGraphInfo['titelBase'] = 'MOD_BPS_STATS_GRAPHTITLE_FACTUUR_DATES_SPR';
+				$aGraphInfo['titelvAxis'] = JText::_('MOD_BPS_STATS_TOTALEN');
+				$aGraphInfo['titelhAxis'] = JText::_('MOD_BPS_STATS_DAGEN');
+			break;
+		}
 		$aTotalQueries = array();
 		//get juiste startmoment en eindmoment
 		switch ($params['periode']) {
@@ -120,7 +88,7 @@ abstract class modbps_statsHelper
 				);
 				//formats
 				$eenheid = 'dag';
-				$aGraphInfo['titel'] = JText::sprintf('MOD_BPS_STATS_GRAPHTITLE_OMZET_DATES_SPR',$aQueryData['dateBegin']->format('d M Y'),$aQueryData['dateEind']->format('d M Y'));
+				$aGraphInfo['titel'] = JText::sprintf($aGraphInfo['titelBase'],'week '.$aQueryData['dateEind']->format('W'),$aQueryData['dateBegin']->format('d M Y'),$aQueryData['dateEind']->format('d M Y'));
 				$aGraphInfo['dateBegin'] = $aQueryData['dateBegin']->format('c');
 				$aGraphInfo['dateEind'] = $aQueryData['dateEind']->format('c');
 				$aTotalQueries['dag8'] = $aQueryData;
@@ -140,10 +108,37 @@ abstract class modbps_statsHelper
 				
 			break;
 			case 'maand':
+				//begindag bepalen
+				$date1 = $date1->add(new DateInterval('P'.($date1->format('t') - $date1->format('j')).'D'));
+				$date1->setTime(22,59,59); //TODO voor de volgende zomertijd...
+				//totalen periode
+				$aQueryData['dateBegin'] = clone($date1);
+				$aQueryData['dateBegin']->sub(new DateInterval('P'.$date1->format('t').'D'));
+				$aQueryData['dateEind'] = clone($date1);
+				$aQueryData['labelInfo'] = array(
+					'date'=>false,
+					'format'=>'total',
+					'formatted'=>JText::_('FIELD_TOTALS')
+				);
 				//formats
 				$eenheid = 'datum';
-				$date2 = JFactory::getDate($date1->toSql());
-				$date2->sub(new DateInterval('P1M'));
+				$aGraphInfo['titel'] = JText::sprintf($aGraphInfo['titelBase'],$aQueryData['dateEind']->format('F'),$aQueryData['dateBegin']->add(new DateInterval('PT5H'))->format('d M Y'),$aQueryData['dateEind']->format('d M Y'));
+				$aGraphInfo['dateBegin'] = $aQueryData['dateBegin']->format('c');
+				$aGraphInfo['dateEind'] = $aQueryData['dateEind']->format('c');
+				$aTotalQueries['dag99'] = $aQueryData;
+				//subtotalen
+				for ($d=$date1->format('t');$d>0;$d--) {
+					$aQueryData['dateBegin'] = clone($date1);
+					$aQueryData['dateBegin']->sub(new DateInterval('P'.$d.'D'));
+					$aQueryData['dateEind'] = clone($date1);
+					$aQueryData['dateEind']->sub(new DateInterval('P'.($d-1).'D'));
+					$aQueryData['labelInfo'] = array(
+						'date'=>$aQueryData['dateEind']->format('c'),
+						'format'=>'j',
+						'formatted'=>$aQueryData['dateEind']->format('j')
+					);
+					$aTotalQueries['dag'.$d] = $aQueryData;
+				}
 			break;
 			case 'kwart':
 				//formats
@@ -158,12 +153,13 @@ abstract class modbps_statsHelper
 				$date2->sub(new DateInterval('P2Y'));
 			break;
 		}
-		
-	// pr($aTotalQueries);
+		$browseRange = modbps_statsHelper::getBrowseRange($params['periode']);
+
+	// pr($aTotalQueries,$date1->toSql());
 		foreach ($aTotalQueries as $key=>$aQueryData) {
 			$sDatumEind = $aQueryData['dateEind']->toSql();
 			$sDatumBegin = $aQueryData['dateBegin']->toSql();
-			$aStats[$key] = self::getTotals($sDatumBegin,$sDatumEind);
+			$aStats[$key] = self::$sStatFunction($sDatumBegin,$sDatumEind);
 			$aInfos[$key] = $aQueryData['labelInfo'];
 		}
 		//uit laatste object velden pakken
@@ -171,11 +167,11 @@ abstract class modbps_statsHelper
 		$aFieldInfos = self::getFieldInfos($eenheid,$aFields);
 	// pr($aStats);
 	// pr($aInfos);
-		$output = json_encode(array('stats'=>$aStats,'infos'=>$aInfos,'fields'=>$aFieldInfos,'graphInfo'=>$aGraphInfo)); 
+		$output = json_encode(array('stats'=>$aStats,'infos'=>$aInfos,'fields'=>$aFieldInfos,'graphInfo'=>$aGraphInfo,'browseRange'=>$browseRange,'params'=>$params)); 
 		return $output;
 	}
 	
-	public static function getTotals($sDatumBegin,$sDatumEind) {
+	public static function getBestelTotals($sDatumBegin,$sDatumEind) {
 		$db = JFactory::getDbo();
 		$results = new JRegistry;
 		$aValidBestelStatussen = self::getValidBestelStatussen();
@@ -214,6 +210,25 @@ abstract class modbps_statsHelper
 		return $results->toArray();
 	}
 	
+	public static function getFactuurTotals($sDatumBegin,$sDatumEind) {
+		$db = JFactory::getDbo();
+		$results = new JRegistry;
+		$aValidBestelStatussen = array('FACTUUR_INITIEEL','FACTUUR_CREDITFACTUUR');
+		$query = $db->getQuery(true);
+		$query->from("#__bps_factuur AS f")
+			->where("f.factuurStatus IN ('".implode("','",$aValidBestelStatussen)."')")
+			->where("f.created BETWEEN '$sDatumBegin' AND '$sDatumEind'");
+		//select factuurtotals
+		$query->select("SUM(f.totaalNetto) AS totaalNetto")
+			->select("SUM(f.totaalBtw) AS totaalBtw")
+			->select("SUM(f.totaalBruto) AS totaalBruto");
+		$db->setQuery($query);
+		$dbResult = $db->loadObject();
+		$results->loadObject($dbResult);
+	// pr($results->toObject());	
+		return $results->toArray();
+	}
+	
 	public static function getFieldInfos($eenheid,$aFields) {
 		$aFieldInfos = array();
 		$aActiveFields = array($eenheid,'nettoInkoop','totaalNetto','totaalBruto','margeNetto','margePerc');
@@ -230,6 +245,41 @@ abstract class modbps_statsHelper
 		}
 	
 		return $aFieldInfos;
+	}
+	
+	public static function getBrowseRange($periode) {
+		$db = JFactory::getDbo();
+		$aValidBestelStatussen = self::getValidBestelStatussen();
+		$query = $db->getQuery(true);
+		$query->select("MAX(b.created) AS lastDate, MIN(b.created) AS firstDate")
+			->from("#__bps_bestelling AS b")
+			->where("b.bestelStatus IN ('".implode("','",$aValidBestelStatussen)."')");
+		$db->setQuery($query);
+		$dbResult = $db->loadObject();
+		$lastDate = JFactory::getDate($dbResult->lastDate);
+		$firstDate = JFactory::getDate($dbResult->firstDate);
+		switch ($periode) {
+			case 'week':
+				$format = 'Y-W';
+				$diff = new DateInterval('P7D');
+			break;
+			case 'maand':
+				$format = 'M-Y';
+				$diff = new DateInterval('P1M');
+			break;
+			default:
+				$format = 'd-m-Y';
+				$diff = new DateInterval('P1Y');
+			break;
+		}
+		$aBrowseRange = array();
+		while ($firstDate < $lastDate) {
+			$aBrowseRange[] = (object)array('value'=>$firstDate->format('Y-m-d'),'text'=>$firstDate->format($format));
+			$firstDate->add($diff);
+		}
+		$aBrowseRange = array_reverse($aBrowseRange);
+	// pr($aBrowseRange);
+		return $aBrowseRange;
 	}
 	
 	public static function getValidBestelStatussen() {
