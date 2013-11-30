@@ -2,65 +2,36 @@
 
 // no direct access
 defined('_JEXEC') or die;
-?>
-<table class="adminlist">
-	<thead>
-		<tr>
-			<th>
-				<?php echo JText::_('MOD_BPS_ORDERS_LATEST_ORDERS'); ?>
-			</th>
-			<th>
-				<strong><?php echo JText::_('JSTATUS'); ?></strong>
-			</th>
-			<th>
-				<strong><?php echo JText::_('MOD_BPS_ORDERS_CREATED'); ?></strong>
-			</th>
-			<th>
-				<strong><?php echo JText::_('MOD_BPS_ORDERS_ORDERNETTO'); ?></strong>
-			</th>
-			<th>
-				<strong><?php echo JText::_('MOD_BPS_ORDERS_USER');?></strong>
-			</th>
-		</tr>
-	</thead>
-<?php if (count($list)) : ?>
-	<tbody>
-	<?php foreach ($list as $i=>$item) : ?>
-		<tr>
-			<th scope="row">
-				<?php if ($item->checked_out) : ?>
-						<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time); ?>
-				<?php endif; ?>
 
-				<?php if ($item->link) :?>
-					<a href="<?php echo $item->link; ?>">
-						<?php echo htmlspecialchars($item->id.' - '.$item->productNaam, ENT_QUOTES, 'UTF-8');?></a>
-				<?php else :
-					echo htmlspecialchars($item->id.' - '.$item->productNaam, ENT_QUOTES, 'UTF-8');
-				endif; ?>
-			</th>
-			<td class="center">
-				<?php echo $item->orderStatusName;?>
-			</td>
-			<td class="center">
-				<?php echo JHtml::_('date', $item->created, 'BIX_DATE'); ?>
-			</td>
-			<td class="right">
-				<?php echo BixHtml::formatPrice($item->orderNetto);?>
-			</td>
-			<td class="center">
-				<?php echo $item->userNaam;?>
-			</td>
-		</tr>
-		<?php endforeach; ?>
-	</tbody>
-<?php else : ?>
-	<tbody>
-		<tr>
-			<td colspan="5">
-				<p class="noresults"><?php echo JText::_('MOD_BPS_ORDERS_NO_MATCHING_RESULTS');?></p>
-			</td>
-		</tr>
-	</tbody>
-<?php endif; ?>
-</table>
+
+
+?>
+
+<script>
+	window.addEvent('domready', function(){	
+		var BPSstats = new modBPSstats('graphForm',{elIds:{periode:'periode',graph:'graphs'}});
+	});
+</script>
+
+<form id="graphForm">
+	<div class="grid-block width100">
+		<div id="controls">	
+			<div class="grid-box width33">
+				<?php echo JHtml::_('select.genericlist',$perodeOptions, 'data[periode]', 'class="inputbox" size="1" ', 'value', 'text', $currentPeriode, 'periode');?>
+			</div>
+			<div class="grid-box width33">
+				producten/gebruiker/omzet
+			</div>
+			<div class="grid-box width33">
+				x
+			</div>
+		</div>
+	</div>
+	<div class="grid-block width100">
+		<div id="graphs">	
+			graph
+		</div>
+	</div>
+	<input type="hidden" name="data[rapportageDag]" value="<?php echo $params->get('rapportageDag',5); ?>">
+</form>
+
