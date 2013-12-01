@@ -3,7 +3,7 @@
  */
  
 
- var modBPSstats = new Class({
+var modBPSstats = new Class({
 	Implements: [Options],
 	options: {
 		elIds: {
@@ -24,7 +24,8 @@
 			tblEndRow: '</tr>',
 			tblEnd: '</tbody></table>'
 		},
-		reqUrl: 'index.php?option=com_bixprintshop&format=raw&task=plugin.triggermodule&action=bps_stats.showstats'
+		reqUrl: 'index.php?option=com_bixprintshop&format=raw&task=plugin.triggermodule&action=bps_stats.showstats',
+		periodical: 0
 	},
 	formEl: {},
 	els: {},
@@ -42,7 +43,9 @@
 			
 		});
 // console.log(this.formEl,formID);
-
+		if (this.options.periodical) {
+			self.loadGraphs.periodical(self.options.periodical,self);
+		}
 		this.loadGraphs();
 	},
 	loadGraphs: function () {
@@ -50,7 +53,7 @@
 		new Request.JSON({
 			url: self.options.reqUrl,
 			onRequest: self.els.graph.fade(0.1),
-			onError: function(text,error){self.els.graph.set('html',text)},
+			onError: function(text,error){self.els.graph.set('html',text);self.els.graph.fade(1);},
 			onSuccess: function(result){self.setGraphs(result)} 
 		}).send(self.formEl);
 	},
@@ -73,7 +76,7 @@
 			html += tmpl.tblHead.replace('{content}',fieldInfo.label);
 		});
 		html += tmpl.tblEndHead;
-console.log(returndata);
+// console.log(returndata);
 		//data uitlezen
 		Object.each(returndata.infos,function(labelInfo,key) {
 			var stats = returndata.stats[key];
@@ -147,7 +150,7 @@ console.log(returndata);
 			i++;
 		});
 
-console.log(dataArray);
+// console.log(dataArray);
 		var data = google.visualization.arrayToDataTable(dataArray);
 		var options = {
 			title : returndata.graphInfo.titel,
@@ -155,11 +158,11 @@ console.log(dataArray);
 			hAxis: {title: returndata.graphInfo.titelhAxis},
 			seriesType: "bars"
 		}; 
-		if (returndata.graphInfo.lineCol) {
+		if (returndata.graphInfo.lineCol != 'undefined') {
 			options.series = {index: {type: "line"}};
 			options.series[returndata.graphInfo.lineCol] = {type: "line"};
 		}
-		
+		 
 		var chart = new google.visualization.ComboChart(document.getElementById('graphHolder'));
 		chart.draw(data, options);
 	}
@@ -168,6 +171,59 @@ console.log(dataArray);
 
 
 
+
+ var bixSelectNav = new Class({
+	Implements: [Options],
+	options: {
+		prevText: '<<',
+		nextText: '>>'
+	},
+	selectEl: {},
+	initialize: function(selectID,options) {
+		this.setOptions(options);
+		this.selectEl = document.id(selectID);
+		var self = this, parent = this.selectEl.getParent();
+		var prevButEl = new Element('button.bix-nav',{
+			text: self.options.prevText,
+			type: 'button'
+		}).addEvent('click', function () {
+			self.navigate('prev');
+		});
+		parent.grab(prevButEl,'top');
+		var nextButEl = new Element('button.bix-nav',{
+			text: self.options.nextText,
+			type: 'button'
+		}).addEvent('click', function () {
+			self.navigate('next');
+		});
+		parent.grab(nextButEl,'bottom');
+	},
+	navigate: function(direction) {
+		var newValue = this.newValue(direction);
+	console.log(direction,newValue);
+		if (newValue) {
+			this.selectEl.set('value',newValue);
+			this.selectEl.fireEvent('change');
+		}
+	},
+	newValue: function(direction) {
+		var current = this.selectEl.get('value');
+		var currentKey = false, last = false, newValue = false;
+		this.selectEl.getElements('option').each(function (optionEl, key) {
+			if (last && optionEl.get('value') == current) {
+				if (direction == 'prev')
+					newValue = last;
+				else 
+					currentKey = key
+			}
+			last = optionEl.get('value');
+			if (currentKey == (key-1) && direction == 'next') {
+				newValue = optionEl.get('value');
+			}
+		});
+		return newValue;
+	}
+});
 
 
 

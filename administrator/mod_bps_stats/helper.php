@@ -55,7 +55,7 @@ abstract class modbps_statsHelper {
 				$aGraphInfo['titelBase'] = 'MOD_BPS_STATS_GRAPHTITLE_OMZET_DATES_SPR';
 				$aGraphInfo['titelvAxis'] = JText::_('MOD_BPS_STATS_TOTALEN');
 				$aGraphInfo['titelhAxis'] = JText::_('MOD_BPS_STATS_DAGEN');
-				$aGraphInfo['lineCol'] = 1;
+				$aGraphInfo['lineCol'] = 0;
 			break;
 			case 'factuur':
 				$sStatFunction = 'getFactuurTotals';
@@ -231,7 +231,7 @@ abstract class modbps_statsHelper {
 	
 	public static function getFieldInfos($eenheid,$aFields) {
 		$aFieldInfos = array();
-		$aActiveFields = array($eenheid,'nettoInkoop','totaalNetto','totaalBruto','margeNetto','margePerc');
+		$aActiveFields = array($eenheid,'totaalNetto','nettoInkoop','totaalBruto','margeNetto','margePerc');
 		foreach ($aActiveFields as $fieldName) {
 			if ($fieldName == $eenheid || in_array($fieldName,$aFields)) {
 				$aFieldInfos[$fieldName] = array(
@@ -266,6 +266,7 @@ abstract class modbps_statsHelper {
 			case 'maand':
 				$format = 'M-Y';
 				$diff = new DateInterval('P1M');
+				$firstDate->sub(new DateInterval('P'.($firstDate->format('j')-1).'D'));
 			break;
 			default:
 				$format = 'd-m-Y';
@@ -277,7 +278,8 @@ abstract class modbps_statsHelper {
 			$aBrowseRange[] = (object)array('value'=>$firstDate->format('Y-m-d'),'text'=>$firstDate->format($format));
 			$firstDate->add($diff);
 		}
-		$aBrowseRange = array_reverse($aBrowseRange);
+		$aBrowseRange[] = (object)array('value'=>$lastDate->format('Y-m-d'),'text'=>$lastDate->format($format));
+		//$aBrowseRange = array_reverse($aBrowseRange);
 	// pr($aBrowseRange);
 		return $aBrowseRange;
 	}

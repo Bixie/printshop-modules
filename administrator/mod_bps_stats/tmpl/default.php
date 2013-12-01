@@ -4,7 +4,7 @@
 defined('_JEXEC') or die;
 
 
-// 
+//
 ?>
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -16,8 +16,10 @@ defined('_JEXEC') or die;
 				dataType:'dataType',
 				startDatum:'startDatum',
 				graph:'graphs'
-			}
+			},
+			periodical: 300000
 		});
+		new bixSelectNav('startDatum');
 	});
 	//googl api
 	google.load('visualization', '1', {packages: ['corechart']});
@@ -27,14 +29,14 @@ defined('_JEXEC') or die;
 	<div class="grid-block width100">
 		<div class="grid-block width100" id="controls">	
 			<div class="grid-box width33">
-				<?php echo JHtml::_('select.genericlist',$perodeOptions, 'data[periode]', 'class="inputbox" size="1" ', 'value', 'text', $currentPeriode, 'periode');?>
+				<?php echo JHtml::_('select.genericlist',$perodeOptions, 'data[periode]', 'class="inputbox" size="1" ', 'value', 'text', $currentPeriode, 'periode'); ?>
 			</div>
 			<div class="grid-box width33">
-				<?php echo JHtml::_('select.genericlist',$datatypeOptions, 'data[dataType]', 'class="inputbox" size="1" ', 'value', 'text', $currentDataType, 'dataType');?>
+				<?php echo JHtml::_('select.genericlist',$datatypeOptions, 'data[dataType]', 'class="inputbox" size="1" ', 'value', 'text', $currentDataType, 'dataType'); ?>
 			</div>
 			<div class="grid-box width33">
 				<?php echo JText::_('MOD_BPS_STATS_PERIODE');?>: 
-				<?php echo JHtml::_('select.genericlist',$browseRanges, 'data[startDatum]', 'class="inputbox" size="1" ', 'value', 'text', $currentStartDatum, 'startDatum');?>
+				<span><?php echo JHtml::_('select.genericlist',$browseRanges, 'data[startDatum]', 'class="inputbox" size="1" ', 'value', 'text', $currentStartDatum, 'startDatum'); ?></span>
 			</div>
 		</div>
 	</div>
