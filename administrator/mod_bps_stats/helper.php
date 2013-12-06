@@ -213,10 +213,10 @@ abstract class modbps_statsHelper {
 	public static function getFactuurTotals($sDatumBegin,$sDatumEind) {
 		$db = JFactory::getDbo();
 		$results = new JRegistry;
-		$aValidBestelStatussen = array('FACTUUR_INITIEEL','FACTUUR_CREDITFACTUUR');
+		$aValidStatussen = array('FACTUUR_INITIEEL','FACTUUR_CREDITFACTUUR','FACTUUR_GECREDITEERD');
 		$query = $db->getQuery(true);
 		$query->from("#__bps_factuur AS f")
-			->where("f.factuurStatus IN ('".implode("','",$aValidBestelStatussen)."')")
+			->where("f.factuurStatus IN ('".implode("','",$aValidStatussen)."')")
 			->where("f.created BETWEEN '$sDatumBegin' AND '$sDatumEind'");
 		//select factuurtotals
 		$query->select("SUM(f.totaalNetto) AS totaalNetto")

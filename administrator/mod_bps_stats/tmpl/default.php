@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 				startDatum:'startDatum',
 				graph:'graphs'
 			},
-			periodical: 300000
+			periodical: 150000
 		});
 		new bixSelectNav('startDatum');
 	});
