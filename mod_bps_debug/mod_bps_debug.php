@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 require_once JPATH_ADMINISTRATOR.DS.'components'.DS.'com_bixprintshop'.DS.'classes'.DS.'bixtools.php';
 
-
+BixTools::loadCss();
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 if ($params->get('layout', 'default') == '_:messages') {
 	$bixPlugin	= new BixPlugin(array('bixprintshop_betaal','bixprintshop_mail','bixprintshop'));
