@@ -11,14 +11,15 @@
 	<description>MOD_BPS_ADMINUSER_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_bps_adminuser">mod_bps_adminuser.php</filename>
+		<filename module="mod_bps_adminuser">index.html</filename>
 		<folder>assets</folder>
 		<folder>tmpl</folder>
 		<filename>index.html</filename>
 		<filename>mod_bps_adminuser.xml</filename>
 	</files>
 	<languages>
-		<language tag="nl-NL">nl-NL.mod_bps_adminuser.ini</language>
-		<language tag="nl-NL">nl-NL.mod_bps_adminuser.sys.ini</language>
+		<language tag="nl-NL">language/nl-NL/nl-NL.mod_bps_adminuser.ini</language>
+		<language tag="nl-NL">language/nl-NL/nl-NL.mod_bps_adminuser.sys.ini</language>
 	</languages>
 	<config>
 		<fields name="params">

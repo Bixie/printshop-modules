@@ -11,13 +11,13 @@
 	<description>MOD_BPS_AANBIEDING_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_bps_aanbieding">mod_bps_aanbieding.php</filename>
+		<filename module="mod_bps_aanbieding">index.html</filename>
+		<folder>assets</folder>
 		<folder>tmpl</folder>
-		<filename>index.html</filename>
-		<filename>mod_bps_aanbieding.xml</filename>
 	</files>
 	<languages>
-		<language tag="nl-NL">nl-NL.mod_bps_aanbieding.ini</language>
-		<language tag="nl-NL">nl-NL.mod_bps_aanbieding.sys.ini</language>
+		<language tag="nl-NL">language/nl-NL/nl-NL.mod_bps_aanbieding.ini</language>
+		<language tag="nl-NL">language/nl-NL/nl-NL.mod_bps_aanbieding.sys.ini</language>
 	</languages>
 	<config>
 		<fields name="params">
