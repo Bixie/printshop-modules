@@ -9,9 +9,9 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-class mod_Bps_ordersInstallerScript {
+class mod_Bps_statsInstallerScript {
 
-	protected $_ext = 'mod_bps_orders';
+	protected $_ext = 'mod_bps_stats';
 
 	/**
 	 * Called on installation
@@ -38,20 +38,11 @@ class mod_Bps_ordersInstallerScript {
 			$row->ordering = 1;
 			$row->published = 1;
 			$row->position = 'bps-cpanel';
-			$row->params = '{"count":"25","layout":"_:default","moduleclass_sfx":"","cache":"0","automatic_title":"1"}';
+			$row->params = '{"count":"0","layout":"_:default","moduleclass_sfx":"","cache":"0","automatic_title":"1"}';
 			if (!$model->save(JArrayHelper::fromObject($row))) {
-				echo JText::sprintf('MOD_BPS_ORDERS_ERROR_CPANEL_SPR', $db->stderr());
-			}
-			//set for mainpanel
-			$row->id = 0;
-			$row->ordering = 1;
-			$row->published = 1;
-			$row->position = 'cpanel';
-			$row->params = '{"count":"5","layout":"_:default","moduleclass_sfx":"","cache":"0","automatic_title":"1"}';
-			if (!$model->save(JArrayHelper::fromObject($row))) {
-				echo sprintf('MOD_BPS_ORDERS_ERROR_CPANEL_SPR', $db->stderr());
+				echo JText::sprintf('MOD_BPS_STATS_ERROR_CPANEL_SPR', $db->stderr());
 			} else {
-				echo JText::_('MOD_BPS_ORDERS_INSTALL_SUCCES');
+				echo JText::_('MOD_BPS_STATS_INSTALL_SUCCES');
 			}
 		}
 

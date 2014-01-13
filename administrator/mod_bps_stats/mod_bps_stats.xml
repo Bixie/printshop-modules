@@ -9,8 +9,10 @@
 	<authorUrl>www.bixie.nl</authorUrl>
 	<version>1.0.1</version>
 	<description>MOD_BPS_STATS_XML_DESCRIPTION</description>
+	<scriptfile>install.script.php</scriptfile>
 	<files>
 		<filename module="mod_bps_stats">mod_bps_stats.php</filename>
+		<filename>install.script.php</filename>
 		<filename>helper.php</filename>
 		<filename>index.html</filename>
 		<folder>tmpl</folder>
