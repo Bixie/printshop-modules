@@ -37,8 +37,8 @@ class mod_Bps_statsInstallerScript {
 		if ($row) {
 			$row->ordering = 1;
 			$row->published = 1;
-			$row->position = 'bps-cpanel';
-			$row->params = '{"count":"0","layout":"_:default","moduleclass_sfx":"","cache":"0","automatic_title":"1"}';
+			$row->position = 'bps-mainpanel';
+			$row->params = '{"count":"0","layout":"_:default","moduleclass_sfx":"","cache":"0","automatic_title":"0"}';
 			if (!$model->save(JArrayHelper::fromObject($row))) {
 				echo JText::sprintf('MOD_BPS_STATS_ERROR_CPANEL_SPR', $db->stderr());
 			} else {
