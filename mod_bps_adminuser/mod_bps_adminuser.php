@@ -17,7 +17,10 @@ $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 $app = JFactory::getApplication();
 $document = JFactory::getDocument();
 $document->addScript(str_replace(JPATH_ROOT.DS,'',dirname(__FILE__)).DS.'assets/adminuser.js');
-
+//reset cart on switch
+if (JRequest::getVar('setadminuser','') != '') {
+	BixTools::getCartClass()->resetCart();
+}
 $actualUser = JFactory::getUser();
 $adminUser = $app->getUserstateFromRequest('com_bixprintshop.adminUser','adminUser',-1,'int');
 $id = uniqid();
