@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5" client="site" method="upgrade">
+	<name>MOD_BPS_PREFLIGHT4CLOUD</name>
+	<author>Matthijs Alles</author>
+	<creationDate>Feb 2014</creationDate>
+	<copyright>Copyright (C) 2014 Bixie. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<authorEmail>admin@bixie.nl</authorEmail>
+	<authorUrl>www.bixie.nl</authorUrl>
+	<version>1.0.0</version>
+	<description>MOD_BPS_PREFLIGHT4CLOUD_XML_DESCRIPTION</description>
+	<files>	
+        <filename module="mod_bps_preflight4cloud">mod_bps_preflight4cloud.php</filename>
+        <filename>index.html</filename>
+        <folder>assets/</folder>
+        <folder>tmpl/</folder>
+	</files>
+	<languages>
+		<language tag="nl-NL">language/nl-NL/nl-NL.mod_bps_preflight4cloud.ini</language>
+		<language tag="nl-NL">language/nl-NL/nl-NL.mod_bps_preflight4cloud.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldpath="/administrator/components/com_bixprintshop/models/fields">
+				<field name="tekstregel1" type="bixtext"
+					label="niks"
+					description="" />
+			</fieldset>
+
+			<fieldset name="advanced">
+
+				<field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+
+				<field
+					name="moduleclass_sfx"
+					type="text"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+
+				<field
+					name="cache"
+					type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC">
+					<option
+						value="1">JGLOBAL_USE_GLOBAL</option>
+					<option
+						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field
+					name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				<field
+					name="cachemode"
+					type="hidden"
+					default="static">
+					<option
+						value="static"></option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
