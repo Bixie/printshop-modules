@@ -9,7 +9,12 @@
 // no direct access
 defined('_JEXEC') or die;
 
-require_once JPATH_ADMINISTRATOR.DS.'components'.DS.'com_bixprintshop'.DS.'classes'.DS.'bixtools.php';
+if (file_exists(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_bixprintshop'.DS.'classes'.DS.'bixtools.php')) {
+	require_once JPATH_ADMINISTRATOR.DS.'components'.DS.'com_bixprintshop'.DS.'classes'.DS.'bixtools.php';
+} else {
+	echo 'Installeer de Bixie Printshop!';
+	return;
+}
 
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
