@@ -16,11 +16,19 @@ if (file_exists(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_bixprintshop'.DS.'cl
 	return;
 }
 //init vars
+$bixPlugin	= new BixPlugin(array('bixprintshop_order'));
 $orderID = 0;
 $uploadID = uniqid('u');
+if (!class_exists('plgBixprintshopPreflight4cloud')) {
+	echo 'Installeer de Preflight4cloud plugin!';
+	return;
+}
+$app = JFactory::getApplication();
+$aBestanden = $app->getUserState('com_bixprintshop.preflight4cloud.uploads',array());
+// pr($aBestanden);
 $endpoint = 'index.php?option=com_bixprintshop&format=raw&task=plugin.triggerevent&plugin=preflight4cloud&action=preflight4cloud.handleUpload';
 $deleteUrl = 'index.php?option=com_bixprintshop&format=raw&task=plugin.triggerevent&plugin=preflight4cloud&action=preflight4cloud.deleteFile';
-//set params
+//set uploadparams
 $uploadParams = new JRegistry();
 $uploadParams->set('uploader.showFiles',false);
 $uploadParams->set('bixOptions.loadUploader',true);
