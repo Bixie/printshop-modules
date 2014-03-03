@@ -34,7 +34,7 @@ if ($productID) {
 	if ($item->params['itemId'] > 0) {
 		$item->prodLink = JRoute::_('index.php?Itemid='.$item->params['itemId'].$prijsSfx.$optionSfx);
 	} else {
-		$item->prodLink = JRoute::_('index.php?option=com_bixprintshop&view=productdetails&catid='.$item->catid.'&productID='.$item->productID.$prijsSfx);
+		$item->prodLink = JRoute::_('index.php?option=com_bixprintshop&view=productdetails&catid='.$item->catid.'&productID='.$item->productID.$prijsSfx.$optionSfx);
 	}
 	$sLink = $item->prodLink;
 }
